@@ -1,0 +1,19 @@
+{
+  "name": "curso-apirest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmedinasm/curso-apirest.git"
+  },
+  "author": "Daniel Miguel Medinas Mateo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dmedinasm/curso-apirest/issues"
+  },
+  "homepage": "https://github.com/dmedinasm/curso-apirest#readme"
+}
