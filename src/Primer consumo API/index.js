@@ -1,4 +1,4 @@
-const urlApi= "https://api.thedogapi.com/v1/images/search?limit=3";
+const urlApi= "https://api.thedogapi.com/v1/images/search?limit=3&api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s";
 
 async function reload() {
    try {
