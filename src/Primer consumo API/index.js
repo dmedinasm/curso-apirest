@@ -1,21 +1,38 @@
-const urlApi= "https://api.thedogapi.com/v1/images/search?limit=3&api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s";
+const API_URL_RANDOM =
+  "https://api.thedogapi.com/v1/images/search?limit=2&api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s";
+const API_URL_FAVOURITES = "https://api.thedogapi.com/v1/favourites?limit=2";
 
-async function reload() {
-   try {
-  const response = await fetch(urlApi);
+const divError = document.getElementById("Error");
+console.log(divError);
+async function loadRandomDogs() {
+  const response = await fetch(API_URL_RANDOM);
   const data = await response.json();
   console.log(data);
-  const img1 = document.getElementById("img1");
-  const img2 = document.getElementById("img2");
-  const img3 = document.getElementById("img3");
-   img1.src = data[0].url;
-   img2.src = data[1].url;
-   img3.src = data[2].url;
-   } catch(error){
-      console.error(error);
-   }
-};
+  console.log("Random");
+  if (response.status !== 200) {
+    divError.innerHTML = "Hubo un error: " + response.status;
+  } else {
+    const img1 = document.getElementById("img1");
+    const img2 = document.getElementById("img2");
 
+    img1.src = data[0].url;
+    img2.src = data[1].url;
+  }
+}
 
-reload();
+async function loadFavoritesDogs() {
+  try {
+    const response = await fetch(API_URL_FAVOURITES);
+    if (response.status !== 200) {
+      divError.innerHTML = "Hubo un error: " + response.status;
+    }
+    const data = await response.json();
+    console.log("Favoritos");
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
+loadRandomDogs();
+loadFavoritesDogs();

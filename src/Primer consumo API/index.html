@@ -8,8 +8,12 @@
 </head>
 <body>
     <h1>Dogs App</h1>
+
+    <div id="Error"></div>
+
     <section id="randomDogs">
         <h2>Dogs aleatorios</h2>
+
         <article>
             <img id="img1" width="150" alt="Foto perrito aleatorio">
             <button>Guardar Perro en favoritos</button>
@@ -18,11 +22,6 @@
             <img id="img2" width="150" alt="Foto perrito aleatorio">
             <button>Guardar Perro en favoritos</button>
         </article>
-        <article>
-            <img id="img3" width="150" alt="Foto perrito aleatorio">
-            <button>Guardar perro en favoritos</button>
-        </article>
-        
     </section>
     <section  id="favoriteDogs">
         <h2>Dogs favoritos</h2>
@@ -31,7 +30,7 @@
             <button>Sacar al perro de favoritos</button>
         </article>
     </section>
-    <button type="button" onclick="reload()">Recargar</button>
+    <button type="button" onclick="loadRandomDogs()">Recargar</button>
   
     <script src="./index.js"></script>
 </body>
