@@ -1,6 +1,6 @@
 const API_URL_RANDOM =
   "https://api.thedogapi.com/v1/images/search?limit=2&api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s";
-const API_URL_FAVOURITES = "https://api.thedogapi.com/v1/favourites?limit=2";
+//const API_URL_FAVOURITES = "https://api.thedogapi.com/v1/favourites?limit=2";
 
 const divError = document.getElementById("Error");
 console.log(divError);
@@ -20,19 +20,21 @@ async function loadRandomDogs() {
   }
 }
 
+const API_URL_FAVOURITES = "https://api.thedogapi.com/v1/favourites?limit=2";
+
 async function loadFavoritesDogs() {
-  try {
-    const response = await fetch(API_URL_FAVOURITES);
-    if (response.status !== 200) {
-      divError.innerHTML = "Hubo un error: " + response.status;
-    }
-    const data = await response.json();
-    console.log("Favoritos");
-    console.log(response);
-  } catch (error) {
-    console.error(error);
-  }
+  const response = await fetch(API_URL_FAVOURITES);
+  const data = await response.text();
+  if (response.status !== 200) {
+    divError.innerHTML = "Hubo un error: " + response.status + data ;
+  } 
 }
+
 
 loadRandomDogs();
 loadFavoritesDogs();
+
+
+
+
+
