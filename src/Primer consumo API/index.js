@@ -2,6 +2,9 @@ const API_URL_RANDOM =
   "https://api.thedogapi.com/v1/images/search?limit=2&api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s";
 const API_URL_FAVOURITES =
   "https://api.thedogapi.com/v1/favourites?api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s";
+  const API_URL_FAVOURITES_DELETE =(id) =>
+  `https://api.thedogapi.com/v1/favourites/${id}?api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s`;
+
 const STATUS_CODES = [
   { message: "Unauthorized", status: 401 },
   { message: "Payment_Required", status: 402 },
@@ -37,7 +40,7 @@ async function loadRandomDogs() {
 
     img1.src = data[0].url;
     img2.src = data[1].url;
-// No poner la funcion saveFavorites directamente ya que las ejecuta no mas cargue la funcion
+// No poner la funcion saveFavorites directamente ya que las ejecuta no mas cargue la funcion(tiempo de depuracion para darse cuenta de eso)
     btn1.onclick = () => saveFavouriteDogs(data[0].id);
     btn2.onclick = () => saveFavouriteDogs(data[1].id);
 
@@ -53,15 +56,20 @@ async function loadFavouriteDogs() {
     const data = await response.json();
     console.log("Favorites");
     console.log(data);
+    const section = document.getElementById('favoriteDogs');
+    section.innerHTML = "";
+    const h2 = document.createElement('h2');
+    const h2Text = document.createTextNode('Dogs favoritos');
+    h2.appendChild(h2Text);
+    section.appendChild(h2);
     data.forEach(dogs => {
-      const section = document.getElementById('favoriteDogs');
       const article = document.createElement('article');
       const img = document.createElement('img');
       const btn = document.createElement('button');
       const btnText = document.createTextNode('Sacar al perro de favoritos');
-
       img.src = dogs.image.url
       img.width = 150;
+      btn.onclick = () => deleteFavouriteDogs(dogs.id);
       btn.appendChild(btnText);
       article.appendChild(img);
       article.appendChild(btn);
@@ -87,7 +95,24 @@ async function saveFavouriteDogs(id) {
   if (res.status !== 200) {
     divError.innerHTML = "Hubo un error: " + res.status + (await res.text());
   }
-  const data = await res.json();
+  console.log('Doggie agregado a favoritos');
+  loadFavouriteDogs();
+}
+
+
+async function deleteFavouriteDogs(id){
+  const res = await fetch(API_URL_FAVOURITES_DELETE(id), {
+    method: "DELETE",
+  });
+
+  console.log("Delete");
+  console.log(res);
+  if (res.status !== 200) {
+    divError.innerHTML = "Hubo un error: " + res.status + (await res.text());
+  }else{
+    console.log('Doggie eliminado de favoritos');
+    loadFavouriteDogs();
+  }
 }
 
 loadRandomDogs();
