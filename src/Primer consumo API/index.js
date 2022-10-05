@@ -1,9 +1,9 @@
 const API_URL_RANDOM =
   "https://api.thedogapi.com/v1/images/search?limit=2&api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s";
 const API_URL_FAVOURITES =
-  "https://api.thedogapi.com/v1/favourites?api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s";
+  "https://api.thedogapi.com/v1/favourites";
   const API_URL_FAVOURITES_DELETE =(id) =>
-  `https://api.thedogapi.com/v1/favourites/${id}?api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s`;
+  `https://api.thedogapi.com/v1/favourites/${id}`;
 
 const STATUS_CODES = [
   { message: "Unauthorized", status: 401 },
@@ -48,7 +48,12 @@ async function loadRandomDogs() {
 }
 
 async function loadFavouriteDogs() {
-  const response = await fetch(API_URL_FAVOURITES);
+  const response = await fetch(API_URL_FAVOURITES, {
+    method: 'GET',
+    headers:{
+      'X-API-KEY': 'live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s',
+    }
+  });
   if (response.status !== 200) {
     divError.innerHTML =
       "Hubo un error: " + response.status + " " + compareCodes(response.status).message;
@@ -83,6 +88,7 @@ async function saveFavouriteDogs(id) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      'X-API-KEY': 'live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s'
     },
     //Metodo stringify para que el backend pueda entender ya que el backend puede estar en otro lenguaje y se especifica un string
     body: JSON.stringify({
@@ -103,6 +109,9 @@ async function saveFavouriteDogs(id) {
 async function deleteFavouriteDogs(id){
   const res = await fetch(API_URL_FAVOURITES_DELETE(id), {
     method: "DELETE",
+    headers: {
+      'X-API-KEY': 'live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s'
+    }
   });
 
   console.log("Delete");
