@@ -4,6 +4,8 @@ const API_URL_FAVOURITES =
   "https://api.thedogapi.com/v1/favourites";
   const API_URL_FAVOURITES_DELETE =(id) =>
   `https://api.thedogapi.com/v1/favourites/${id}`;
+  const API_URL_UPLOAD =
+  "https://api.thedogapi.com/v1/images/upload";
 
 const STATUS_CODES = [
   { message: "Unauthorized", status: 401 },
@@ -99,7 +101,7 @@ async function saveFavouriteDogs(id) {
   console.log("Save");
   console.log(res);
   if (res.status !== 200) {
-    divError.innerHTML = "Hubo un error: " + res.status + (await res.text());
+    divError.innerHTML = "Hubo un error: " + res.status + compareCodes(response.status).message;
   }
   console.log('Doggie agregado a favoritos');
   loadFavouriteDogs();
@@ -123,6 +125,26 @@ async function deleteFavouriteDogs(id){
     loadFavouriteDogs();
   }
 }
+
+async function uploadDogPhoto(){
+  const form = document.getElementById('uploadingDogFile');
+  const formData = new FormData(form);
+  console.log(formData.get('file'));
+  const res = await fetch(API_URL_UPLOAD, {
+    method: 'POST',
+    headers:{
+      //'Content-Type': 'multipart/form-data',
+      'X-API-KEY': 'live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s',
+    },
+    body: formData
+  });
+  if (res.status !== 200) {
+    divError.innerHTML = "Hubo un error: " + res.status + (await res.text());
+  }
+  console.log('Foto de Michi subida');
+  console.log(res);
+  }
+
 
 loadRandomDogs();
 loadFavouriteDogs();
