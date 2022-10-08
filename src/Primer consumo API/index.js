@@ -138,12 +138,14 @@ async function uploadDogPhoto(){
     },
     body: formData
   });
-  if (res.status !== 200) {
-    divError.innerHTML = "Hubo un error: " + res.status + (await res.text());
+  if (res.status >= 400 ) {
+    divError.innerHTML = "Hubo un error: " + res.status ;
   }
-  console.log('Foto de Michi subida');
-  console.log(res);
+  const idData = (JSON.parse(await res.text())).id;
+  console.log('Foto de Perro subida');
+  saveFavouriteDogs(idData);
   }
+
 
 
 loadRandomDogs();
