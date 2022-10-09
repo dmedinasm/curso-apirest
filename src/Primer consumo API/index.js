@@ -1,3 +1,9 @@
+const api = axios.create({
+  baseURL: 'https://api.thedogapi.com/v1'
+});
+
+api.defaults.headers.common['X-API-KEY'] = 'live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s'
+
 const API_URL_RANDOM =
   "https://api.thedogapi.com/v1/images/search?limit=2&api_key=live_Je2iJayLCJmORfO2DRBgtpj4HhyrRmjiiyeLO9MtQVkxryEFEsjd85f7xWVIzB2s";
 const API_URL_FAVOURITES =
@@ -86,7 +92,11 @@ async function loadFavouriteDogs() {
 }
 
 async function saveFavouriteDogs(id) {
-  const res = await fetch(API_URL_FAVOURITES, {
+
+  const {data, status} = await api.post('/favourites',{
+    image_id: id,
+  });//Menos codigo usando libreria axios
+  /*const res = await fetch(API_URL_FAVOURITES, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -96,12 +106,13 @@ async function saveFavouriteDogs(id) {
     body: JSON.stringify({
       image_id: id,
     }),
-  });
+  });*/
 
-  console.log("Save");
-  console.log(res);
-  if (res.status !== 200) {
-    divError.innerHTML = "Hubo un error: " + res.status + compareCodes(response.status).message;
+  console.log(data);
+  console.log(status);
+  //console.log(res);
+  if (status !== 200) {
+    divError.innerHTML = "Hubo un error: " + status + data.message;
   }
   console.log('Doggie agregado a favoritos');
   loadFavouriteDogs();
